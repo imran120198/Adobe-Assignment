@@ -81,29 +81,36 @@ PostRoute.post("/posts/:id/like", async (req, res) => {
 });
 
 //Decrement the like count of a post by id. The count should not go below 0.
-PostRoute.post("/posts/:id/unlike", async(req,res) => {
-    try{
-        const dilikePost = await PostModel.findById(req.params.id);
-        if (!dilikePost) {
-          res.status(500).send({ message: "Post Not Found" });
-        } else {
-          dilikePost.likes--;
-          await dilikePost.save();
-          res.status(201).send({ message: "Decrease the like" });
-        }
+PostRoute.post("/posts/:id/unlike", async (req, res) => {
+  try {
+    const dislikePost = await PostModel.findById(req.params.id);
+    if (!dislikePost) {
+      res.status(500).send({ message: "Post Not Found" });
+    } else if (dislikePost > 0) {
+      dislikePost.likes--;
+      await dislikePost.save();
+      res.status(201).send({ message: "Decrease the like" });
     }
-    catch(err){
-        res.status(500).send({message:err.message})
-    }
-})
-
-
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
 
 //Retrieve the total number of posts.
 PostRoute.get("/analytics/posts", async (req, res) => {
   try {
     const totalPosts = await PostModel.countDocuments();
     res.status(201).send({ message: totalPosts });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
+//Retrieve the top 5 most liked posts.
+PostRoute.get("/analytics/posts/top-liked", async (req, res) => {
+  try {
+    const topliked = await PostModel.find().sort({ likes: -1 }).limit(5);
+    res.status(201).send({ message: "Top most Likes", topliked });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
