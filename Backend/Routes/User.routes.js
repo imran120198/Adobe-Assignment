@@ -12,7 +12,7 @@ UserRoute.post("/users", async (req, res) => {
     await user.save();
     res.status(201).send(user);
   } catch (err) {
-    res.status(404).send({ message: err.message });
+    res.status(500).send({ message: err.message });
     console.log({ message: err.message });
   }
 });
@@ -24,7 +24,7 @@ UserRoute.get("/users/:id", async (req, res) => {
     if (userData) {
       res.status(201).send(userData);
     } else {
-      res.status(404).send("User Not Found");
+      res.status(500).send("User Not Found");
     }
   } catch (err) {
     console.log({ message: err.message });
@@ -39,7 +39,7 @@ UserRoute.put("/users/:id", async (req, res) => {
       req.body
     );
     if (!updateUser) {
-      res.status(404).send({ message: "User Data not found" });
+      res.status(500).send({ message: "User Data not found" });
     } else {
       res.status(201).send({ message: "User Data Successfully Edited" });
     }
@@ -53,12 +53,12 @@ UserRoute.delete("/users/:id", async (req, res) => {
   try {
     const deleteUser = await UserModel.findByIdAndDelete(req.params.id);
     if (!deleteUser) {
-      res.status(400).send({ message: "Something went wrong!" });
+      res.status(500).send({ message: "Something went wrong!" });
     } else {
       res.status(201).send({ message: "Successfully Delete User info" });
     }
   } catch (err) {
-    res.status(404).send({ message: err.message });
+    res.status(500).send({ message: err.message });
   }
 });
 
@@ -68,7 +68,7 @@ UserRoute.get("/analytics/users", async (req, res) => {
     const totalNumber = await UserModel.countDocuments();
     res.status(201).send({ message: totalNumber });
   } catch (err) {
-    res.status(404).send({ message: err.message });
+    res.status(500).send({ message: err.message });
   }
 });
 
