@@ -20,6 +20,20 @@ PostRoute.post("/posts", async (req, res) => {
   }
 });
 
+//Retrieve a post by id.
+PostRoute.get("/posts/:id", async (req, res) => {
+  try {
+    const postData = await PostModel.findById(req.params.id);
+    if (!postData) {
+      res.status(500).send({ message: "Posts not found" });
+    } else {
+      res.status(201).send({ message: postData });
+    }
+  } catch (err) {
+    res.status(500).send({ message: "Error in finding post data" });
+  }
+});
+
 module.exports = {
   PostRoute,
 };
