@@ -50,6 +50,30 @@ PostRoute.put("/posts/:id", async (req, res) => {
   }
 });
 
+//Delete a post by id.
+PostRoute.delete("/posts/:id", async (req, res) => {
+  try {
+    const deletePost = await PostModel.findByIdAndDelete(req.params.id);
+    if (!deletePost) {
+      res.status(500).send({ message: "Something wrong with delete id" });
+    } else {
+      res.status(201).send({ message: "Delete Successfull" });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
+//Retrieve the total number of posts.
+PostRoute.get("/analytics/posts", async (req, res) => {
+  try {
+    const totalPosts = await PostModel.countDocuments();
+    res.status(500).send({ message: totalPosts });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
 module.exports = {
   PostRoute,
 };
