@@ -32,18 +32,21 @@ UserRoute.get("/users/:id", async (req, res) => {
 });
 
 //Update a user's name or bio by id.
-// UserRoute.put("/users/:id", async (req, res) => {
-//   try {
-//     const userEdit = await UserModel.findById(req.params.id);
-//     if (!userEdit) {
-//       res.status(404).send({ message: "User Data not found" });
-//     } else {
-
-//     }
-//   } catch (err) {
-//     console.log({ message: err.message });
-//   }
-// });
+UserRoute.put("/users/:id", async (req, res) => {
+  try {
+    const updateUser = await UserModel.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
+    if (!updateUser) {
+      res.status(404).send({ message: "User Data not found" });
+    } else {
+      res.status(201).send({ message: "User Data Successfully Edited" });
+    }
+  } catch (err) {
+    console.log({ message: err.message });
+  }
+});
 
 //Delete a user by id.
 UserRoute.delete("/users/:id", async (req, res) => {
@@ -54,6 +57,16 @@ UserRoute.delete("/users/:id", async (req, res) => {
     } else {
       res.status(201).send({ message: "Successfully Delete User info" });
     }
+  } catch (err) {
+    res.status(404).send({ message: err.message });
+  }
+});
+
+//Retrieve the total number of users.
+UserRoute.get("/analytics/users", async (req, res) => {
+  try {
+    const totalNumber = await UserModel.countDocuments();
+    res.status(201).send({ message: totalNumber });
   } catch (err) {
     res.status(404).send({ message: err.message });
   }
