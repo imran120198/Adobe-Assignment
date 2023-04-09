@@ -34,6 +34,22 @@ PostRoute.get("/posts/:id", async (req, res) => {
   }
 });
 
+//Update a post's content by id.
+PostRoute.put("/posts/:id", async (req, res) => {
+  try {
+    const updatePost = await PostModel.findByIdAndUpdate(req.params.id);
+    if (!updatePost) {
+      res.status(500).send({ message: "Error in Updating Post" });
+    } else {
+      updatePost.content = req.body.content;
+      await updatePost.save();
+      res.status(500).send({ message: "Update Successfull" });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
 module.exports = {
   PostRoute,
 };
