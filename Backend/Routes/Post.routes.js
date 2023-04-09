@@ -73,12 +73,31 @@ PostRoute.post("/posts/:id/like", async (req, res) => {
     } else {
       likePost.likes++;
       await likePost.save();
-      res.status(500).send({ message: "Increase the kike" });
+      res.status(201).send({ message: "Increase the like" });
     }
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
 });
+
+//Decrement the like count of a post by id. The count should not go below 0.
+PostRoute.post("/posts/:id/unlike", async(req,res) => {
+    try{
+        const dilikePost = await PostModel.findById(req.params.id);
+        if (!dilikePost) {
+          res.status(500).send({ message: "Post Not Found" });
+        } else {
+          dilikePost.likes--;
+          await dilikePost.save();
+          res.status(201).send({ message: "Decrease the like" });
+        }
+    }
+    catch(err){
+        res.status(500).send({message:err.message})
+    }
+})
+
+
 
 //Retrieve the total number of posts.
 PostRoute.get("/analytics/posts", async (req, res) => {
