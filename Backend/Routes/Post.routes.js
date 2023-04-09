@@ -64,11 +64,27 @@ PostRoute.delete("/posts/:id", async (req, res) => {
   }
 });
 
+//Increment the like count of a post by id.
+PostRoute.post("/posts/:id/like", async (req, res) => {
+  try {
+    const likePost = await PostModel.findById(req.params.id);
+    if (!likePost) {
+      res.status(500).send({ message: "Post Not Found" });
+    } else {
+      likePost.likes++;
+      await likePost.save();
+      res.status(500).send({ message: "Increase the kike" });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
 //Retrieve the total number of posts.
 PostRoute.get("/analytics/posts", async (req, res) => {
   try {
     const totalPosts = await PostModel.countDocuments();
-    res.status(500).send({ message: totalPosts });
+    res.status(201).send({ message: totalPosts });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
