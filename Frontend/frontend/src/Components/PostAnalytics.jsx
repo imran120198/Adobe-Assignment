@@ -25,7 +25,7 @@ const PostAnalytics = () => {
     <div>
       <Box>
         <Center>
-          <Text fontSize="2xl" as={"b"}>
+          <Text fontSize="5xl" as={"b"}>
             Post Analytics
           </Text>
         </Center>
