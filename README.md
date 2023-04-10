@@ -4,10 +4,19 @@
 You are tasked with creating a simple social media platform consisting of a backend API and a frontend UI, and analytics pages. The platform should support creating,
 reading, updating, and deleting operations for user profiles and posts. In addition, users should be able to "like" and "unlike" posts. The analytics pages should display insights on user engagement and content popularity.
 
-## Deply
+## Deploy
 
 * Frontend Deploy - https://frontend-indol-five.vercel.app/
 * Backend Deploy - https://adobe-backend-ek2e.onrender.com
+
+## Tech Stack
+
+* React.js
+* Node.js
+* Express.js
+* MongoDb
+* Javascript
+* Chakra-UI
 
 ## Setup
 
