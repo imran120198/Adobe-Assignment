@@ -97,7 +97,7 @@ PostRoute.post("/posts/:id/unlike", async (req, res) => {
     const dislikePost = await PostModel.findById(req.params.id);
     if (!dislikePost) {
       res.status(500).send({ message: "Post Not Found" });
-    } else if (dislikePost > 0) {
+    } else {
       dislikePost.likes--;
       await dislikePost.save();
       res.status(201).send({ message: "Decrease the like" });
