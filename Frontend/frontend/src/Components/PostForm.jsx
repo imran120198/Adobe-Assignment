@@ -4,43 +4,37 @@ import {
   Center,
   FormControl,
   FormLabel,
-  Input,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 
-const UserForm = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    bio: "",
+const PostForm = () => {
+  const [postData, setPostData] = useState({
+    content: "",
   });
 
   const handleChange = (e) => {
     const { value, name } = e.target;
-    setForm({ ...form, [name]: value });
+    setPostData({ ...postData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("https://adobe-backend-ek2e.onrender.com/users", {
-        name: form.name,
-        email: form.email,
-        bio: form.bio,
+      .post("https://adobe-backend-ek2e.onrender.com/posts", {
+        content: postData.content,
       })
       .then((res) => {
+        alert("Post Successfully Created");
         console.log(res.data);
-        alert("User Created");
       })
       .catch((err) => {
-        alert("Something Went wrong!");
+        alert("Something went wrong!");
         console.log(err);
       });
   };
-
   return (
     <div>
       <Box
@@ -50,36 +44,21 @@ const UserForm = () => {
           marginTop: "5rem",
           borderRadius: "20px",
           padding: "2rem",
-          border:"1px solid"
+          border: "1px solid",
         }}
       >
         <Center>
-          <Text fontSize={"4xl"} as="b">CREATE USER</Text>
+          <Text fontSize={"4xl"} as="b">
+            CREATE POST
+          </Text>
         </Center>
         <FormControl isRequired>
-          <FormLabel>Name</FormLabel>
-          <Input
-            name="name"
-            type="text"
-            placeholder="Enter Name"
-            maxLength={50}
-            onChange={handleChange}
-          />
-
-          <FormLabel>Email</FormLabel>
-          <Input
-            name="email"
-            type="email"
-            placeholder="Enter Email"
-            onChange={handleChange}
-          />
-
-          <FormLabel>Bio</FormLabel>
+          <FormLabel>Content</FormLabel>
           <Textarea
-            name="bio"
             type="text"
-            placeholder="Enter Bio"
-            maxLength={200}
+            name="content"
+            maxLength={300}
+            placeContent={"Enter Content"}
             onChange={handleChange}
           />
           <Center>
@@ -93,4 +72,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default PostForm;
