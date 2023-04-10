@@ -6,7 +6,7 @@ reading, updating, and deleting operations for user profiles and posts. In addit
 
 ## Deply
 
-* Frontend Deploy - https://tubular-selkie-7c5c2c.netlify.app/
+* Frontend Deploy - https://frontend-indol-five.vercel.app/
 * Backend Deploy - https://adobe-backend-ek2e.onrender.com
 
 ## Setup
