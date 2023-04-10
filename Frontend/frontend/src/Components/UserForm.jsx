@@ -24,7 +24,6 @@ const UserForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     axios
       .post("https://adobe-backend-ek2e.onrender.com/users", {
         name: form.name,
@@ -34,6 +33,7 @@ const UserForm = () => {
       .then((res) => {
         console.log(res.data);
         alert("User Created");
+        window.location.reload()
       })
       .catch((err) => {
         alert("Something Went wrong!");

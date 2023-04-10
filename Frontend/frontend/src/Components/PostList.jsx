@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
   Center,
   FormControl,
   FormLabel,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -24,14 +22,14 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const UserList = () => {
+const PostList = () => {
   const [data, setData] = useState([]);
   const [modify, setModify] = useState({});
   const [edit, setedit] = useState({
-    name: "",
-    bio: "",
+    content: "",
   });
 
   const {
@@ -47,10 +45,10 @@ const UserList = () => {
   } = useDisclosure();
 
   useEffect(() => {
-    axios("https://adobe-backend-ek2e.onrender.com/users").then((res) => {
-      setData(res.data);
-    });
-  }, [data]);
+    axios("https://adobe-backend-ek2e.onrender.com/posts")
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -60,26 +58,46 @@ const UserList = () => {
   const handleEdit = (e) => {
     e.preventDefault();
     axios
-      .put(`https://adobe-backend-ek2e.onrender.com/users/${modify._id}`, {
-        name: edit.name,
-        bio: edit.bio,
+      .put(`https://adobe-backend-ek2e.onrender.com/posts/${modify._id}`, {
+        content: edit.content,
       })
       .then((res) => {
         console.log("Edited");
+        window.location.reload();
       })
       .catch((err) => console.log(err));
   };
 
   const handleDelete = (e) => {
     axios
-      .delete(`https://adobe-backend-ek2e.onrender.com/users/${e._id}`)
+      .delete(`https://adobe-backend-ek2e.onrender.com/posts/${e._id}`)
       .then((res) => {
-        alert("User Data Delete Successfully");
-        window.location.reload()
+        alert("Post Delete Successfully");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleLike = (e) => {
+    axios
+      .post(`https://adobe-backend-ek2e.onrender.com/posts/${e._id}/like`)
+      .then((res) => {
+        alert("Post Liked");
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleUnlike = (e) => {
+    axios
+      .post(`https://adobe-backend-ek2e.onrender.com/posts/${e._id}/unlike`)
+      .then((res) => {
+        alert("Post Unlike");
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -87,17 +105,18 @@ const UserList = () => {
       <Box>
         <Center>
           <Text fontSize="2xl" as={"b"}>
-            User List
+            Post List
           </Text>
         </Center>
+
         <TableContainer>
           <Table>
             <Thead>
               <Tr>
                 <Th>Id</Th>
-                <Th>Name</Th>
-                <Th>Email</Th>
-                <Th>Bio</Th>
+                <Th>Content</Th>
+                <Th>Likes</Th>
+                <Th>Dislike</Th>
                 <Th>View</Th>
                 <Th>Edit</Th>
                 <Th>Delete</Th>
@@ -109,9 +128,23 @@ const UserList = () => {
                   return (
                     <Tr key={elem._id}>
                       <Td>{elem._id}</Td>
-                      <Td>{elem.name}</Td>
-                      <Td>{elem.email}</Td>
-                      <Td>{elem.bio}</Td>
+                      <Td>{elem.content}</Td>
+                      <Td>
+                        <Button
+                          onClick={() => handleLike(elem)}
+                          colorScheme="red"
+                        >
+                          Like
+                        </Button>
+                      </Td>
+                      <Td>
+                        <Button
+                          onClick={() => handleUnlike(elem)}
+                          colorScheme="red"
+                        >
+                          Unlike
+                        </Button>
+                      </Td>
                       <Td>
                         <Button
                           onClick={() => {
@@ -136,7 +169,9 @@ const UserList = () => {
                       </Td>
                       <Td>
                         <Button
-                          onClick={() => handleDelete(elem)}
+                          onClick={() => {
+                            handleDelete(elem);
+                          }}
                           colorScheme="red"
                         >
                           Delete
@@ -157,18 +192,17 @@ const UserList = () => {
               <ModalHeader>View User Information</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Text>Name: {modify.name}</Text>
-                <Text>Email:{modify.email}</Text>
-                <Text>Bio: {modify.bio}</Text>
+                <Text>Content: {modify.content}</Text>
+                <Text>Likes : {modify.likes}</Text>
               </ModalBody>
               <ModalFooter>
-                <Button onCLick={onViewClose}>Close</Button>
+                <Button onClick={onViewClose}>Close</Button>
               </ModalFooter>
             </ModalContent>
           </Modal>
         )}
 
-        {/* Edit option */}
+        {/* Edit Option */}
         {modify && (
           <Modal onClose={oneditClose} isOpen={iseditOpen}>
             <ModalOverlay />
@@ -177,21 +211,13 @@ const UserList = () => {
               <ModalCloseButton />
               <ModalBody>
                 <FormControl isRequired>
-                  <FormLabel>Name</FormLabel>
-                  <Input
-                    type="text"
-                    name="name"
-                    onChange={handleChange}
-                    maxLength={50}
-                    placeholder="Enter Name"
-                  />
-                  <FormLabel>Bio</FormLabel>
+                  <FormLabel>Content</FormLabel>
                   <Textarea
-                    name="bio"
+                    name="content"
                     type="text"
                     onChange={handleChange}
-                    maxLength={200}
-                    placeholder="Enter bio"
+                    maxLength={300}
+                    placeholder="Enter Content"
                   />
                 </FormControl>
               </ModalBody>
@@ -214,4 +240,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default PostList;

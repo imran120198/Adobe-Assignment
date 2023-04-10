@@ -21,19 +21,20 @@ const PostForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     axios
       .post("https://adobe-backend-ek2e.onrender.com/posts", {
         content: postData.content,
       })
       .then((res) => {
         alert("Post Successfully Created");
+        window.location.reload()
         console.log(res.data);
       })
       .catch((err) => {
         alert("Something went wrong!");
         console.log(err);
       });
+      
   };
   return (
     <div>

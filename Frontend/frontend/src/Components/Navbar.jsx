@@ -31,7 +31,7 @@ const Navbar = () => {
               <Link to="/userlist">User List</Link>
             </Button>
             <Button colorScheme="teal">
-              <Link>Post List</Link>
+              <Link to="/postlist">Post List</Link>
             </Button>
             <Button colorScheme="teal">
               <Link>User Analytics</Link>
