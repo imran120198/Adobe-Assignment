@@ -27,10 +27,18 @@ const Navbar = () => {
             <Button colorScheme="teal">
               <Link to="/posts">Create Post</Link>
             </Button>
-            <Button colorScheme="teal">User List</Button>
-            <Button colorScheme="teal">Post List</Button>
-            <Button colorScheme="teal">User Analytics</Button>
-            <Button colorScheme="teal">Post Analytics</Button>
+            <Button colorScheme="teal">
+              <Link to="/userlist">User List</Link>
+            </Button>
+            <Button colorScheme="teal">
+              <Link>Post List</Link>
+            </Button>
+            <Button colorScheme="teal">
+              <Link>User Analytics</Link>
+            </Button>
+            <Button colorScheme="teal">
+              <Link>Post Analytics</Link>
+            </Button>
           </ButtonGroup>
         </Flex>
       </Box>
