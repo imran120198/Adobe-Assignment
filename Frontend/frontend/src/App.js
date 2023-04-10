@@ -4,7 +4,9 @@ import Navbar from "./Components/Navbar";
 import UserForm from "./Components/UserForm";
 import PostForm from "./Components/PostForm";
 import UserList from "./Components/UserList";
-import PostList from "./Components/PostList"
+import PostList from "./Components/PostList";
+import UserAnalytics from "./Components/UserAnalytics";
+import PostAnalytics from "./Components/PostAnalytics";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/posts" element={<PostForm />} />
         <Route path="/userlist" element={<UserList />} />
         <Route path="/postlist" element={<PostList />} />
+        <Route path="/useranalytics" element={<UserAnalytics />} />
+        <Route path="/postanalytics" element={<PostAnalytics />} />
       </Routes>
     </div>
   );

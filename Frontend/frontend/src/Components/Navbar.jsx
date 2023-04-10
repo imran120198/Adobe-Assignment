@@ -34,10 +34,10 @@ const Navbar = () => {
               <Link to="/postlist">Post List</Link>
             </Button>
             <Button colorScheme="teal">
-              <Link>User Analytics</Link>
+              <Link to="/useranalytics">User Analytics</Link>
             </Button>
             <Button colorScheme="teal">
-              <Link>Post Analytics</Link>
+              <Link to="/postanalytics">Post Analytics</Link>
             </Button>
           </ButtonGroup>
         </Flex>
