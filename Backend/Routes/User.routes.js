@@ -72,7 +72,6 @@ UserRoute.get("/analytics/users", async (req, res) => {
   }
 });
 
-//Retrieve the top 5 most active users, based on the number of posts.
 
 
 module.exports = {
